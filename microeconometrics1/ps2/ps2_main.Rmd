@@ -1,0 +1,351 @@
+---
+title: "Microeconometrics Task - Problem Set 2"
+date: "2024-08-27"
+author: "Ricardo Semião e Castro"
+output: 
+  pdf_document:
+    number_sections: true
+header-includes:
+   - \usepackage{float}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+knitr::opts_knit$set(root.dir = here::here())
+```
+
+# Setup
+
+```{r}
+library(tidyverse)
+library(glue)
+library(broom)
+
+library(knitr)
+library(kableExtra)
+```
+
+Loading data:
+
+```{r}
+
+data_lot <- haven::read_dta("ps2/base_lotteries.dta")
+data_exam <- haven::read_dta("ps2/voluntary_exam.dta")
+```
+
+
+# Question 1
+
+First, we standardize the variables.
+
+```{r}
+cols <- expand.grid(c("mt", "lp"), 7:9) %>%
+  apply(1, \(x) paste0(c("score", x), collapse = "_"))
+
+data_lot <- data_lot %>%
+  mutate(
+    across(all_of(cols), function(col) {
+      control <- col[won_lotteryA == 0]
+      (col - mean(control)) / sd(control)
+    }),
+    across(sex:ever_failed_school, as.factor)
+  ) %>%
+  na.omit()
+```
+
+
+## Item a)
+
+The grades of the test are largely defined by the difficulty of the test. Without standardization, we would be capturing this effect, which would pollute the effect of the treatment between grades. When we standardize the scores, we are capturing the relative position of students, clensed from the difficulty effect.
+
+
+## Item b)
+
+The averages and standard deviations are expected to change with the treatment, such that we only want to consider the changes in difficulty of the conterfactual, that is, we want to standardize using the averages and standard deviation of the control group.
+
+
+
+# Question 2.
+
+## Items a), and c)
+
+First, lets create dummies for each variable.
+
+```{r}
+labels <- list(
+  sex = c("male", "female"),
+  race = c("white", "brown", "black", "yellow", "indigenous"),
+  mother = c("l.t. 5", "5 to 9", "9 to HS", "HS to college", "college", "more", "unsure"),
+  father = c("l.t. 5", "5 to 9", "9 to HS", "HS to college", "college", "more", "unsure"),
+  failed = c("never", "once", "more")
+) %>%
+  imap(~ paste(.y, .x)) %>%
+  reduce(c)
+
+data_dummies <- fastDummies::dummy_cols(data_lot[2:6], remove_selected_columns = TRUE) %>%
+  set_names(labels) %>%
+  cbind(data_lot[-c(1:6)])
+```
+
+Now, we can create a function that makes the comparisons.
+
+```{r}
+comparate <- function(data, treat_ind, control_ind = !treat_ind) {
+  imap_dfr(data, function(col, name) {
+    control <- col[treat_ind]
+    treat <- col[control_ind]
+    
+    test <- tryCatch(t.test(control, treat), error = \(e) list(p.value = NA))
+    n <- c(length(control), length(treat))
+    
+    results <- c(
+      mean(control),
+      sd(control),
+      mean(treat) - mean(control),
+      sqrt((sd(control)^2 / n[1]) + (sd(treat)^2 / n[2])),
+      test$p.value
+    ) %>%
+      round(3)
+    
+    tibble(
+      Variable = name,
+      Control = glue("{results[1]} ({results[2]})"),
+      Diff = glue("{results[3]} ({results[4]})"),
+      `P-value` = results[5],
+      `Ajd. P-value` = p.adjust(`P-value`, method = "holm")
+    )
+  })
+}
+```
+
+The results can be seen at the end of the question.
+
+
+## Items b) and c)
+
+As with everything in inference, there is a chance of any unbalancedness to arise randomly, which wouldn't indicate a problem with the lottery. With lots of control variables, the probability of such random deviation is relevant.
+
+But, if the difference in groups was not random, it can be an indication that the individuals are self selecting, or that the lottery is not fair. This would put in check the hypothesis of the exogeneity of the treatment.
+
+To get further evidence, we could test if any unbalancedness is correlated with the treatment, with methods/tests such as Randomization Inference, Bonferroni, and Holm.
+
+At the end, I present the results with the Hold p-value adjustment.
+
+We can see that some variables present statistically significant differences, meaning that the evidence for balanced groups and lottery fairness is not good.
+
+
+## Item d)
+
+Then, the hypothesis of the exogeneity of the treatment would be hard to defend, once that we have an indication that the individuals are self selecting, or that the lottery is not fair.
+
+
+## Item e)
+
+Then, the comparison talked above would be valid, since the lottery would similarly divide the groups. 
+
+
+## Results
+
+Below I present the results from this question. They wouldn't fit in a horizontally doubled table with both comparisons, so I presented one table for each comparison.
+
+```{r}
+comparison_treated <- select(data_dummies, `sex male`:`failed more`) %>%
+  comparate(data_dummies$won_lotteryA + data_dummies$won_lotteryB >= 1)
+
+comparison_treated %>% kable() %>% kable_styling(latex_options = "HOLD_position")
+
+comparison_ab <- select(data_dummies, `sex male`:`failed more`) %>%
+  comparate(data_dummies$won_lotteryA == 1, data_dummies$won_lotteryB == 1)
+
+comparison_ab %>% kable() %>% kable_styling(latex_options = "HOLD_position")
+```
+
+
+
+# Question 3
+```{r}
+form_base <- score_mt_8 ~ won_lotteryA
+mod_base <- lm(form_base, data_lot)
+
+form_controls <- update.formula(form_base,
+  . ~ . + sex + race + mother_schooling + father_schooling + ever_failed_school
+)
+mod_controls <- lm(form_controls, data_lot)
+```
+
+```{r}
+test_permutation <- function(f, data, n = 1000) {
+  coef_true <- abs(coef(lm(f, data)))
+  n_coef <- length(coef_true)
+  
+  coef_perm <- map_dfr(1:n, function(i) {
+    data$score_mt_8 <- sample(data$score_mt_8)
+    abs(coef(lm(f, data)))
+  })
+  
+  sapply(1:n_coef, \(i) mean(coef_perm[,i] >= coef_true[i]))
+}
+```
+
+
+## Item c)
+
+Using averages differences does not account for the different variances in the potential outcomes, such that the test, while asymptotically valid, can underreject. That is why we used the adjustments.
+
+
+## Item d)
+
+```{r}
+test_wildboot <- function(f, data, n = 1000) {
+  mod <- lm(f, data)
+  res <- resid(mod)
+  pred <- predict(mod)
+  coef_true <- coef(mod)
+  n_coef <- length(coef_true)
+  
+  coef_perm <- map_dfr(1:n, function(i) {
+    y <- pred + res * sample(c(-1, 1), length(residuals), replace = TRUE)
+    data$score_mt_8 <- y
+    coef(lm(f, data))
+  })
+  
+  sapply(1:n_coef, \(i) mean(coef_perm[,i] >= coef_true[i]))
+}
+```
+
+
+## Results
+
+```{r}
+summary(mod_base)$coef[,c(1,4)] %>%
+  as_tibble(rownames = "Coefficient") %>%
+  mutate(
+    `Pr Perm` = test_permutation(form_base, data_lot),
+    `Pr Wild` = test_wildboot(form_base, data_lot)
+  ) %>%
+  kable() %>%
+  kable_styling(latex_options = "HOLD_position")
+
+summary(mod_controls)$coef[,c(1,4)] %>%
+  as_tibble(rownames = "Coefficient") %>%
+  mutate(
+    `Pr Perm` = test_permutation(form_controls, data_lot),
+    `Pr Wild` = test_wildboot(form_controls, data_lot)
+  ) %>%
+  kable() %>%
+  kable_styling(latex_options = "HOLD_position")
+```
+
+
+
+# Question 4
+
+## Item a)
+
+Two options can be:
+
+- Define a new, combined, dependent variable. For example, any weighted sum of the outcomes. In the most simple way, just the sum or mean of both.
+- Do separate regressions, but jointly test the p-values using Bonferroni or Holm methods.
+
+
+## Item b)
+
+I did both approaches from above. The results are in the next section.
+
+```{r}
+mod_sum <- lm(
+  score_mt_8 + score_lp_8 ~ won_lotteryA + sex + race + mother_schooling +
+    father_schooling + ever_failed_school,
+  data_lot
+)
+```
+
+```{r}
+mod_mt <- lm(
+  score_mt_8 ~ won_lotteryA + sex + race + mother_schooling +
+    father_schooling + ever_failed_school,
+  data_lot
+)
+mod_lp <- lm(
+  score_lp_8 ~ won_lotteryA + sex + race + mother_schooling +
+    father_schooling + ever_failed_school,
+  data_lot
+)
+
+adj_pvalues <- p.adjust(
+  c(summary(mod_mt)$coefficients[, 4], summary(mod_lp)$coefficients[, 4]),
+  method = "holm"
+)
+```
+
+## Results
+
+Again, all in one table wouldn't be very easy to see.
+
+```{r}
+summary(mod_sum)$coef[,c(1,4)] %>%
+  as_tibble(rownames = "Coefficient") %>%
+  kable() %>%
+  kable_styling(latex_options = "HOLD_position")
+
+summary(mod_mt)$coef[,c(1,4)] %>%
+  as_tibble(rownames = "Coefficient") %>%
+  mutate( `Pr Adj` = adj_pvalues[1:length(coef(mod_mt))]) %>%
+  kable() %>%
+  kable_styling(latex_options = "HOLD_position")
+
+summary(mod_lp)$coef[,c(1,4)] %>%
+  as_tibble(rownames = "Coefficient") %>%
+  mutate( `Pr Adj` = adj_pvalues[1:length(coef(mod_lp))]) %>%
+  kable() %>%
+  kable_styling(latex_options = "HOLD_position")
+```
+
+
+
+# Question 5
+
+In this question, i'll focus on the computational answers.
+
+## Item a)
+
+```{r}
+data_join <- full_join(data_lot, data_exam, by = "student_code") %>%
+  filter(lotteryA == 1) %>%
+  mutate(
+    did_test = !is.na(voluntary_exam_score),
+    military = !(is.na(won_lotteryA) | won_lotteryA == 0)
+  ) 
+
+summary(lm(did_test ~ military, data_join))
+```
+
+## Item b)
+
+```{r}
+data_dummies <- filter(data_join, did_test)[2:6] %>%
+  fastDummies::dummy_cols(remove_selected_columns = TRUE) %>%
+  set_names(labels) %>%
+  cbind(data_lot[-c(1:6)]) %>%
+  na.omit()
+
+comparison_treated <- select(data_dummies, `sex male`:`failed more`) %>%
+  comparate(data_dummies$won_lotteryA == 1)
+
+comparison_treated %>% kable() %>% kable_styling(latex_options = "HOLD_position")
+
+comparison_treated <- select(data_dummies, `sex male`:`failed more`) %>%
+  comparate(data_dummies$won_lotteryB == 1)
+
+comparison_treated %>% kable() %>% kable_styling(latex_options = "HOLD_position")
+```
+
+# Item e)
+
+```{r}
+leedata <- data_join %>%
+  select(military, did_test, voluntary_exam_score) %>%
+  setNames(c("treat", "selection", "outcome"))
+
+leebounds::leebounds(leedata)
+```

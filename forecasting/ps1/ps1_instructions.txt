@@ -1,0 +1,13 @@
+Entregar um pdf com os seguintes resultados:
+
+Parte 1:
+Plotar séries e analisar se são estacionárias (por 'regra de valls' ou por teste adf). 
+Estimar OLS e recursive OLS para o modelo y = b0 + b1*x (queimar as 100 primeiras observações e deixar 200 para previsão)
+Plotar previsões e intervalos de confiança. 
+Comparar RMSE e MAE dos modelos estimados. 
+(Extra) Incluir dinâmica (y_t = b1*y_{t-1} + b2*x_{t} + b3*x_{t-1}) e comparar com os modelos anteriores.
+
+Parte 2: 
+Plotar gráfico do quadrado dos resíduos de uma estimativa por OLS 
+Goldfeld-Quant test, Breusch-Pagan test, White test, Normality test, Durbin-Watson test, Chow-test e Bai Perron test e discutir os resultados. 
+(Extra) Incluir dummy(ies) com valor igual a 1 para os apropriados coeficientes (intercepto e/ou coeficiente angular) identificados com quebra pelos testes de quebras estruturais e comparar o MAE/MSE com os achados na Parte 1. 

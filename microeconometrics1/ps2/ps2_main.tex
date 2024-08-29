@@ -1,0 +1,873 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Microeconometrics Task - Problem Set 2},
+  pdfauthor={Ricardo Semião e Castro},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Microeconometrics Task - Problem Set 2}
+\author{Ricardo Semião e Castro}
+\date{2024-08-27}
+
+\begin{document}
+\maketitle
+
+\section{Setup}\label{setup}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(glue)}
+\FunctionTok{library}\NormalTok{(broom)}
+
+\FunctionTok{library}\NormalTok{(knitr)}
+\FunctionTok{library}\NormalTok{(kableExtra)}
+\end{Highlighting}
+\end{Shaded}
+
+Loading data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_lot }\OtherTok{\textless{}{-}}\NormalTok{ haven}\SpecialCharTok{::}\FunctionTok{read\_dta}\NormalTok{(}\StringTok{"ps2/base\_lotteries.dta"}\NormalTok{)}
+\NormalTok{data\_exam }\OtherTok{\textless{}{-}}\NormalTok{ haven}\SpecialCharTok{::}\FunctionTok{read\_dta}\NormalTok{(}\StringTok{"ps2/voluntary\_exam.dta"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Question 1}\label{question-1}
+
+First, we standardize the variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cols }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"mt"}\NormalTok{, }\StringTok{"lp"}\NormalTok{), }\DecValTok{7}\SpecialCharTok{:}\DecValTok{9}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{apply}\NormalTok{(}\DecValTok{1}\NormalTok{, \textbackslash{}(x) }\FunctionTok{paste0}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"score"}\NormalTok{, x), }\AttributeTok{collapse =} \StringTok{"\_"}\NormalTok{))}
+
+\NormalTok{data\_lot }\OtherTok{\textless{}{-}}\NormalTok{ data\_lot }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(cols), }\ControlFlowTok{function}\NormalTok{(col) \{}
+\NormalTok{      control }\OtherTok{\textless{}{-}}\NormalTok{ col[won\_lotteryA }\SpecialCharTok{==} \DecValTok{0}\NormalTok{]}
+\NormalTok{      (col }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(control)) }\SpecialCharTok{/} \FunctionTok{sd}\NormalTok{(control)}
+\NormalTok{    \}),}
+    \FunctionTok{across}\NormalTok{(sex}\SpecialCharTok{:}\NormalTok{ever\_failed\_school, as.factor)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{na.omit}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Item a)}\label{item-a}
+
+The grades of the test are largely defined by the difficulty of the
+test. Without standardization, we would be capturing this effect, which
+would pollute the effect of the treatment between grades. When we
+standardize the scores, we are capturing the relative position of
+students, clensed from the difficulty effect.
+
+\subsection{Item b)}\label{item-b}
+
+The averages and standard deviations are expected to change with the
+treatment, such that we only want to consider the changes in difficulty
+of the conterfactual, that is, we want to standardize using the averages
+and standard deviation of the control group.
+
+\section{Question 2.}\label{question-2.}
+
+\subsection{Items a), and c)}\label{items-a-and-c}
+
+First, lets create dummies for each variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{labels }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
+  \AttributeTok{sex =} \FunctionTok{c}\NormalTok{(}\StringTok{"male"}\NormalTok{, }\StringTok{"female"}\NormalTok{),}
+  \AttributeTok{race =} \FunctionTok{c}\NormalTok{(}\StringTok{"white"}\NormalTok{, }\StringTok{"brown"}\NormalTok{, }\StringTok{"black"}\NormalTok{, }\StringTok{"yellow"}\NormalTok{, }\StringTok{"indigenous"}\NormalTok{),}
+  \AttributeTok{mother =} \FunctionTok{c}\NormalTok{(}\StringTok{"l.t. 5"}\NormalTok{, }\StringTok{"5 to 9"}\NormalTok{, }\StringTok{"9 to HS"}\NormalTok{, }\StringTok{"HS to college"}\NormalTok{, }\StringTok{"college"}\NormalTok{, }\StringTok{"more"}\NormalTok{, }\StringTok{"unsure"}\NormalTok{),}
+  \AttributeTok{father =} \FunctionTok{c}\NormalTok{(}\StringTok{"l.t. 5"}\NormalTok{, }\StringTok{"5 to 9"}\NormalTok{, }\StringTok{"9 to HS"}\NormalTok{, }\StringTok{"HS to college"}\NormalTok{, }\StringTok{"college"}\NormalTok{, }\StringTok{"more"}\NormalTok{, }\StringTok{"unsure"}\NormalTok{),}
+  \AttributeTok{failed =} \FunctionTok{c}\NormalTok{(}\StringTok{"never"}\NormalTok{, }\StringTok{"once"}\NormalTok{, }\StringTok{"more"}\NormalTok{)}
+\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{imap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \FunctionTok{paste}\NormalTok{(.y, .x)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{reduce}\NormalTok{(c)}
+
+\NormalTok{data\_dummies }\OtherTok{\textless{}{-}}\NormalTok{ fastDummies}\SpecialCharTok{::}\FunctionTok{dummy\_cols}\NormalTok{(data\_lot[}\DecValTok{2}\SpecialCharTok{:}\DecValTok{6}\NormalTok{], }\AttributeTok{remove\_selected\_columns =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_names}\NormalTok{(labels) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{cbind}\NormalTok{(data\_lot[}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)])}
+\end{Highlighting}
+\end{Shaded}
+
+Now, we can create a function that makes the comparisons.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comparate }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data, treat\_ind, }\AttributeTok{control\_ind =} \SpecialCharTok{!}\NormalTok{treat\_ind) \{}
+  \FunctionTok{imap\_dfr}\NormalTok{(data, }\ControlFlowTok{function}\NormalTok{(col, name) \{}
+\NormalTok{    control }\OtherTok{\textless{}{-}}\NormalTok{ col[treat\_ind]}
+\NormalTok{    treat }\OtherTok{\textless{}{-}}\NormalTok{ col[control\_ind]}
+    
+\NormalTok{    test }\OtherTok{\textless{}{-}} \FunctionTok{tryCatch}\NormalTok{(}\FunctionTok{t.test}\NormalTok{(control, treat), }\AttributeTok{error =}\NormalTok{ \textbackslash{}(e) }\FunctionTok{list}\NormalTok{(}\AttributeTok{p.value =} \ConstantTok{NA}\NormalTok{))}
+\NormalTok{    n }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{length}\NormalTok{(control), }\FunctionTok{length}\NormalTok{(treat))}
+    
+\NormalTok{    results }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+      \FunctionTok{mean}\NormalTok{(control),}
+      \FunctionTok{sd}\NormalTok{(control),}
+      \FunctionTok{mean}\NormalTok{(treat) }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(control),}
+      \FunctionTok{sqrt}\NormalTok{((}\FunctionTok{sd}\NormalTok{(control)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{/}\NormalTok{ n[}\DecValTok{1}\NormalTok{]) }\SpecialCharTok{+}\NormalTok{ (}\FunctionTok{sd}\NormalTok{(treat)}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{/}\NormalTok{ n[}\DecValTok{2}\NormalTok{])),}
+\NormalTok{      test}\SpecialCharTok{$}\NormalTok{p.value}
+\NormalTok{    ) }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{round}\NormalTok{(}\DecValTok{3}\NormalTok{)}
+    
+    \FunctionTok{tibble}\NormalTok{(}
+      \AttributeTok{Variable =}\NormalTok{ name,}
+      \AttributeTok{Control =} \FunctionTok{glue}\NormalTok{(}\StringTok{"\{results[1]\} (\{results[2]\})"}\NormalTok{),}
+      \AttributeTok{Diff =} \FunctionTok{glue}\NormalTok{(}\StringTok{"\{results[3]\} (\{results[4]\})"}\NormalTok{),}
+      \StringTok{\textasciigrave{}}\AttributeTok{P{-}value}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ results[}\DecValTok{5}\NormalTok{],}
+      \StringTok{\textasciigrave{}}\AttributeTok{Ajd. P{-}value}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{p.adjust}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{P{-}value}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{method =} \StringTok{"holm"}\NormalTok{)}
+\NormalTok{    )}
+\NormalTok{  \})}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+The results can be seen at the end of the question.
+
+\subsection{Items b) and c)}\label{items-b-and-c}
+
+As with everything in inference, there is a chance of any unbalancedness
+to arise randomly, which wouldn't indicate a problem with the lottery.
+With lots of control variables, the probability of such random deviation
+is relevant.
+
+But, if the difference in groups was not random, it can be an indication
+that the individuals are self selecting, or that the lottery is not
+fair. This would put in check the hypothesis of the exogeneity of the
+treatment.
+
+To get further evidence, we could test if any unbalancedness is
+correlated with the treatment, with methods/tests such as Randomization
+Inference, Bonferroni, and Holm.
+
+At the end, I present the results with the Hold p-value adjustment.
+
+We can see that some variables present statistically significant
+differences, meaning that the evidence for balanced groups and lottery
+fairness is not good.
+
+\subsection{Item d)}\label{item-d}
+
+Then, the hypothesis of the exogeneity of the treatment would be hard to
+defend, once that we have an indication that the individuals are self
+selecting, or that the lottery is not fair.
+
+\subsection{Item e)}\label{item-e}
+
+Then, the comparison talked above would be valid, since the lottery
+would similarly divide the groups.
+
+\subsection{Results}\label{results}
+
+Below I present the results from this question. They wouldn't fit in a
+horizontally doubled table with both comparisons, so I presented one
+table for each comparison.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comparison\_treated }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(data\_dummies, }\StringTok{\textasciigrave{}}\AttributeTok{sex male}\StringTok{\textasciigrave{}}\SpecialCharTok{:}\StringTok{\textasciigrave{}}\AttributeTok{failed more}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{comparate}\NormalTok{(data\_dummies}\SpecialCharTok{$}\NormalTok{won\_lotteryA }\SpecialCharTok{+}\NormalTok{ data\_dummies}\SpecialCharTok{$}\NormalTok{won\_lotteryB }\SpecialCharTok{\textgreater{}=} \DecValTok{1}\NormalTok{)}
+
+\NormalTok{comparison\_treated }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{kable}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \StringTok{"HOLD\_position"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{lllrr}
+\toprule
+Variable & Control & Diff & P-value & Ajd. P-value\\
+\midrule\relax
+sex male & 0.405 (0.492) & -0.001 (0.046) & 0.989 & 0.989\\
+sex female & 0.595 (0.492) & 0.001 (0.046) & 0.989 & 0.989\\
+race white & 0.265 (0.442) & -0.013 (0.041) & 0.748 & 0.748\\
+race brown & 0.502 (0.501) & 0.05 (0.046) & 0.286 & 0.286\\
+race black & 0.191 (0.394) & -0.039 (0.035) & 0.272 & 0.272\\
+\addlinespace
+race yellow & 0.019 (0.135) & 0.013 (0.014) & 0.355 & 0.355\\
+race indigenous & 0.023 (0.151) & -0.011 (0.012) & 0.365 & 0.365\\
+mother l.t. 5 & 0.07 (0.255) & 0.038 (0.026) & 0.146 & 0.146\\
+mother 5 to 9 & 0.214 (0.411) & 0.026 (0.039) & 0.504 & 0.504\\
+mother 9 to HS & 0.153 (0.361) & -0.049 (0.031) & 0.115 & 0.115\\
+\addlinespace
+mother HS to college & 0.298 (0.458) & 0.026 (0.043) & 0.542 & 0.542\\
+mother college & 0.107 (0.31) & -0.023 (0.027) & 0.404 & 0.404\\
+mother more & 0.07 (0.255) & -0.014 (0.023) & 0.545 & 0.545\\
+mother unsure & 0.088 (0.284) & -0.004 (0.026) & 0.867 & 0.867\\
+father l.t. 5 & 0.112 (0.316) & 0 (0.029) & 0.990 & 0.990\\
+\addlinespace
+father 5 to 9 & 0.214 (0.411) & 0.026 (0.039) & 0.504 & 0.504\\
+father 9 to HS & 0.14 (0.347) & -0.048 (0.03) & 0.113 & 0.113\\
+father HS to college & 0.251 (0.435) & 0.017 (0.041) & 0.680 & 0.680\\
+father college & 0.056 (0.23) & 0.016 (0.023) & 0.476 & 0.476\\
+father more & 0.019 (0.135) & -0.015 (0.01) & 0.148 & 0.148\\
+\addlinespace
+father unsure & 0.209 (0.408) & 0.003 (0.038) & 0.943 & 0.943\\
+failed never & 0.712 (0.454) & 0.012 (0.042) & 0.768 & 0.768\\
+failed once & 0.2 (0.401) & 0.02 (0.038) & 0.598 & 0.598\\
+failed more & 0.088 (0.284) & -0.032 (0.024) & 0.183 & 0.183\\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comparison\_ab }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(data\_dummies, }\StringTok{\textasciigrave{}}\AttributeTok{sex male}\StringTok{\textasciigrave{}}\SpecialCharTok{:}\StringTok{\textasciigrave{}}\AttributeTok{failed more}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{comparate}\NormalTok{(data\_dummies}\SpecialCharTok{$}\NormalTok{won\_lotteryA }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, data\_dummies}\SpecialCharTok{$}\NormalTok{won\_lotteryB }\SpecialCharTok{==} \DecValTok{1}\NormalTok{)}
+
+\NormalTok{comparison\_ab }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{kable}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \StringTok{"HOLD\_position"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{lllrr}
+\toprule
+Variable & Control & Diff & P-value & Ajd. P-value\\
+\midrule\relax
+sex male & 0.432 (0.497) & -0.084 (0.071) & 0.240 & 0.240\\
+sex female & 0.568 (0.497) & 0.084 (0.071) & 0.240 & 0.240\\
+race white & 0.24 (0.428) & 0.079 (0.067) & 0.238 & 0.238\\
+race brown & 0.514 (0.502) & -0.035 (0.073) & 0.630 & 0.630\\
+race black & 0.192 (0.395) & -0.003 (0.058) & 0.953 & 0.953\\
+\addlinespace
+race yellow & 0.021 (0.142) & -0.006 (0.019) & 0.746 & 0.746\\
+race indigenous & 0.034 (0.182) & -0.034 (0.015) & 0.025 & 0.025\\
+mother l.t. 5 & 0.062 (0.241) & 0.025 (0.04) & 0.524 & 0.524\\
+mother 5 to 9 & 0.212 (0.41) & 0.005 (0.06) & 0.933 & 0.933\\
+mother 9 to HS & 0.151 (0.359) & 0.009 (0.053) & 0.870 & 0.870\\
+\addlinespace
+mother HS to college & 0.308 (0.463) & -0.033 (0.066) & 0.621 & 0.621\\
+mother college & 0.116 (0.322) & -0.029 (0.043) & 0.497 & 0.497\\
+mother more & 0.068 (0.253) & 0.004 (0.038) & 0.916 & 0.916\\
+mother unsure & 0.082 (0.276) & 0.019 (0.043) & 0.656 & 0.656\\
+father l.t. 5 & 0.11 (0.313) & 0.006 (0.047) & 0.892 & 0.892\\
+\addlinespace
+father 5 to 9 & 0.247 (0.433) & -0.102 (0.056) & 0.070 & 0.070\\
+father 9 to HS & 0.151 (0.359) & -0.035 (0.049) & 0.478 & 0.478\\
+father HS to college & 0.226 (0.42) & 0.078 (0.066) & 0.236 & 0.236\\
+father college & 0.048 (0.214) & 0.025 (0.036) & 0.498 & 0.498\\
+father more & 0.021 (0.142) & -0.006 (0.019) & 0.746 & 0.746\\
+\addlinespace
+father unsure & 0.199 (0.4) & 0.033 (0.061) & 0.586 & 0.586\\
+failed never & 0.678 (0.469) & 0.105 (0.063) & 0.101 & 0.101\\
+failed once & 0.212 (0.41) & -0.038 (0.057) & 0.503 & 0.503\\
+failed more & 0.11 (0.313) & -0.066 (0.036) & 0.067 & 0.067\\
+\bottomrule
+\end{longtable}
+
+\section{Question 3}\label{question-3}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{form\_base }\OtherTok{\textless{}{-}}\NormalTok{ score\_mt\_8 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ won\_lotteryA}
+\NormalTok{mod\_base }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(form\_base, data\_lot)}
+
+\NormalTok{form\_controls }\OtherTok{\textless{}{-}} \FunctionTok{update.formula}\NormalTok{(form\_base,}
+\NormalTok{  . }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{+}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ race }\SpecialCharTok{+}\NormalTok{ mother\_schooling }\SpecialCharTok{+}\NormalTok{ father\_schooling }\SpecialCharTok{+}\NormalTok{ ever\_failed\_school}
+\NormalTok{)}
+\NormalTok{mod\_controls }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(form\_controls, data\_lot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test\_permutation }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(f, data, }\AttributeTok{n =} \DecValTok{1000}\NormalTok{) \{}
+\NormalTok{  coef\_true }\OtherTok{\textless{}{-}} \FunctionTok{abs}\NormalTok{(}\FunctionTok{coef}\NormalTok{(}\FunctionTok{lm}\NormalTok{(f, data)))}
+\NormalTok{  n\_coef }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(coef\_true)}
+  
+\NormalTok{  coef\_perm }\OtherTok{\textless{}{-}} \FunctionTok{map\_dfr}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n, }\ControlFlowTok{function}\NormalTok{(i) \{}
+\NormalTok{    data}\SpecialCharTok{$}\NormalTok{score\_mt\_8 }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{score\_mt\_8)}
+    \FunctionTok{abs}\NormalTok{(}\FunctionTok{coef}\NormalTok{(}\FunctionTok{lm}\NormalTok{(f, data)))}
+\NormalTok{  \})}
+  
+  \FunctionTok{sapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n\_coef, \textbackslash{}(i) }\FunctionTok{mean}\NormalTok{(coef\_perm[,i] }\SpecialCharTok{\textgreater{}=}\NormalTok{ coef\_true[i]))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Item c)}\label{item-c}
+
+Using averages differences does not account for the different variances
+in the potential outcomes, such that the test, while asymptotically
+valid, can underreject. That is why we used the adjustments.
+
+\subsection{Item d)}\label{item-d-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{test\_wildboot }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(f, data, }\AttributeTok{n =} \DecValTok{1000}\NormalTok{) \{}
+\NormalTok{  mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(f, data)}
+\NormalTok{  res }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(mod)}
+\NormalTok{  pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(mod)}
+\NormalTok{  coef\_true }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(mod)}
+\NormalTok{  n\_coef }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(coef\_true)}
+  
+\NormalTok{  coef\_perm }\OtherTok{\textless{}{-}} \FunctionTok{map\_dfr}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n, }\ControlFlowTok{function}\NormalTok{(i) \{}
+\NormalTok{    y }\OtherTok{\textless{}{-}}\NormalTok{ pred }\SpecialCharTok{+}\NormalTok{ res }\SpecialCharTok{*} \FunctionTok{sample}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{), }\FunctionTok{length}\NormalTok{(residuals), }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{    data}\SpecialCharTok{$}\NormalTok{score\_mt\_8 }\OtherTok{\textless{}{-}}\NormalTok{ y}
+    \FunctionTok{coef}\NormalTok{(}\FunctionTok{lm}\NormalTok{(f, data))}
+\NormalTok{  \})}
+  
+  \FunctionTok{sapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{n\_coef, \textbackslash{}(i) }\FunctionTok{mean}\NormalTok{(coef\_perm[,i] }\SpecialCharTok{\textgreater{}=}\NormalTok{ coef\_true[i]))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Results}\label{results-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(mod\_base)}\SpecialCharTok{$}\NormalTok{coef[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{)] }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames =} \StringTok{"Coefficient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \StringTok{\textasciigrave{}}\AttributeTok{Pr Perm}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{test\_permutation}\NormalTok{(form\_base, data\_lot),}
+    \StringTok{\textasciigrave{}}\AttributeTok{Pr Wild}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{test\_wildboot}\NormalTok{(form\_base, data\_lot)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \StringTok{"HOLD\_position"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{lrrrr}
+\toprule
+Coefficient & Estimate & Pr(>\&\#124;t\&\#124;) & Pr Perm & Pr Wild\\
+\midrule\relax
+(Intercept) & 0.0008760 & 0.9873211 & 0.998 & 1.000\\
+won\_lotteryA & 0.2389622 & 0.0154668 & 0.020 & 0.513\\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(mod\_controls)}\SpecialCharTok{$}\NormalTok{coef[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{)] }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames =} \StringTok{"Coefficient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \StringTok{\textasciigrave{}}\AttributeTok{Pr Perm}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{test\_permutation}\NormalTok{(form\_controls, data\_lot),}
+    \StringTok{\textasciigrave{}}\AttributeTok{Pr Wild}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{test\_wildboot}\NormalTok{(form\_controls, data\_lot)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \StringTok{"HOLD\_position"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{lrrrr}
+\toprule
+Coefficient & Estimate & Pr(>\&\#124;t\&\#124;) & Pr Perm & Pr Wild\\
+\midrule\relax
+(Intercept) & 0.4046692 & 0.0444820 & 0.059 & 1.000\\
+won\_lotteryA & 0.2479112 & 0.0123628 & 0.015 & 0.000\\
+sex2 & -0.0446908 & 0.6380350 & 0.656 & 0.000\\
+race2 & -0.0408518 & 0.7126682 & 0.726 & 1.000\\
+race3 & -0.2117029 & 0.1454232 & 0.181 & 0.000\\
+\addlinespace
+race4 & 0.7114344 & 0.0170654 & 0.022 & 1.000\\
+race5 & 0.0135123 & 0.9704270 & 0.966 & 0.000\\
+mother\_schooling2 & -0.2296147 & 0.2294087 & 0.226 & 0.000\\
+mother\_schooling3 & -0.0790496 & 0.7056870 & 0.710 & 1.000\\
+mother\_schooling4 & -0.1592331 & 0.3976212 & 0.410 & 1.000\\
+\addlinespace
+mother\_schooling5 & -0.0054524 & 0.9815636 & 0.980 & 1.000\\
+mother\_schooling6 & -0.0452888 & 0.8596504 & 0.866 & 1.000\\
+mother\_schooling7 & -0.3237400 & 0.1856243 & 0.205 & 1.000\\
+father\_schooling2 & -0.0593496 & 0.7393442 & 0.752 & 1.000\\
+father\_schooling3 & -0.1890603 & 0.3524776 & 0.364 & 0.000\\
+\addlinespace
+father\_schooling4 & -0.0505090 & 0.7786279 & 0.775 & 0.000\\
+father\_schooling5 & -0.1814210 & 0.4622589 & 0.464 & 0.000\\
+father\_schooling6 & -0.0420376 & 0.9306210 & 0.946 & 0.506\\
+father\_schooling7 & -0.1408316 & 0.4568370 & 0.474 & 0.000\\
+ever\_failed\_school2 & -0.5098885 & 0.0000103 & 0.000 & 1.000\\
+\addlinespace
+ever\_failed\_school3 & -0.0036747 & 0.9836599 & 0.975 & 1.000\\
+\bottomrule
+\end{longtable}
+
+\section{Question 4}\label{question-4}
+
+\subsection{Item a)}\label{item-a-1}
+
+Two options can be:
+
+\begin{itemize}
+\tightlist
+\item
+  Define a new, combined, dependent variable. For example, any weighted
+  sum of the outcomes. In the most simple way, just the sum or mean of
+  both.
+\item
+  Do separate regressions, but jointly test the p-values using
+  Bonferroni or Holm methods.
+\end{itemize}
+
+\subsection{Item b)}\label{item-b-1}
+
+I did both approaches from above. The results are in the next section.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod\_sum }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}
+\NormalTok{  score\_mt\_8 }\SpecialCharTok{+}\NormalTok{ score\_lp\_8 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ won\_lotteryA }\SpecialCharTok{+}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ race }\SpecialCharTok{+}\NormalTok{ mother\_schooling }\SpecialCharTok{+}
+\NormalTok{    father\_schooling }\SpecialCharTok{+}\NormalTok{ ever\_failed\_school,}
+\NormalTok{  data\_lot}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod\_mt }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}
+\NormalTok{  score\_mt\_8 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ won\_lotteryA }\SpecialCharTok{+}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ race }\SpecialCharTok{+}\NormalTok{ mother\_schooling }\SpecialCharTok{+}
+\NormalTok{    father\_schooling }\SpecialCharTok{+}\NormalTok{ ever\_failed\_school,}
+\NormalTok{  data\_lot}
+\NormalTok{)}
+\NormalTok{mod\_lp }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}
+\NormalTok{  score\_lp\_8 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ won\_lotteryA }\SpecialCharTok{+}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ race }\SpecialCharTok{+}\NormalTok{ mother\_schooling }\SpecialCharTok{+}
+\NormalTok{    father\_schooling }\SpecialCharTok{+}\NormalTok{ ever\_failed\_school,}
+\NormalTok{  data\_lot}
+\NormalTok{)}
+
+\NormalTok{adj\_pvalues }\OtherTok{\textless{}{-}} \FunctionTok{p.adjust}\NormalTok{(}
+  \FunctionTok{c}\NormalTok{(}\FunctionTok{summary}\NormalTok{(mod\_mt)}\SpecialCharTok{$}\NormalTok{coefficients[, }\DecValTok{4}\NormalTok{], }\FunctionTok{summary}\NormalTok{(mod\_lp)}\SpecialCharTok{$}\NormalTok{coefficients[, }\DecValTok{4}\NormalTok{]),}
+  \AttributeTok{method =} \StringTok{"holm"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Results}\label{results-2}
+
+Again, all in one table wouldn't be very easy to see.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(mod\_sum)}\SpecialCharTok{$}\NormalTok{coef[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{)] }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames =} \StringTok{"Coefficient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \StringTok{"HOLD\_position"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{lrr}
+\toprule
+Coefficient & Estimate & Pr(>\&\#124;t\&\#124;)\\
+\midrule\relax
+(Intercept) & 0.3411289 & 0.2367740\\
+won\_lotteryA & 0.4055460 & 0.0043610\\
+sex2 & 0.1257289 & 0.3561922\\
+race2 & -0.2444985 & 0.1247445\\
+race3 & -0.3436771 & 0.0994232\\
+\addlinespace
+race4 & 0.4217956 & 0.3227434\\
+race5 & -0.3195906 & 0.5409690\\
+mother\_schooling2 & -0.2172668 & 0.4275198\\
+mother\_schooling3 & -0.1260763 & 0.6744632\\
+mother\_schooling4 & -0.3208463 & 0.2347856\\
+\addlinespace
+mother\_schooling5 & -0.0718971 & 0.8317221\\
+mother\_schooling6 & -0.1179993 & 0.7480111\\
+mother\_schooling7 & -0.8283897 & 0.0184300\\
+father\_schooling2 & 0.2774653 & 0.2783181\\
+father\_schooling3 & -0.0813376 & 0.7801825\\
+\addlinespace
+father\_schooling4 & 0.1855781 & 0.4714731\\
+father\_schooling5 & 0.0077334 & 0.9825601\\
+father\_schooling6 & -0.0188552 & 0.9782741\\
+father\_schooling7 & 0.1081930 & 0.6901004\\
+ever\_failed\_school2 & -0.5917364 & 0.0003394\\
+\addlinespace
+ever\_failed\_school3 & -0.0031021 & 0.9903802\\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(mod\_mt)}\SpecialCharTok{$}\NormalTok{coef[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{)] }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames =} \StringTok{"Coefficient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{( }\StringTok{\textasciigrave{}}\AttributeTok{Pr Adj}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ adj\_pvalues[}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(}\FunctionTok{coef}\NormalTok{(mod\_mt))]) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \StringTok{"HOLD\_position"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{lrrr}
+\toprule
+Coefficient & Estimate & Pr(>\&\#124;t\&\#124;) & Pr Adj\\
+\midrule\relax
+(Intercept) & 0.4046692 & 0.0444820 & 1.0000000\\
+won\_lotteryA & 0.2479112 & 0.0123628 & 0.5068754\\
+sex2 & -0.0446908 & 0.6380350 & 1.0000000\\
+race2 & -0.0408518 & 0.7126682 & 1.0000000\\
+race3 & -0.2117029 & 0.1454232 & 1.0000000\\
+\addlinespace
+race4 & 0.7114344 & 0.0170654 & 0.6826161\\
+race5 & 0.0135123 & 0.9704270 & 1.0000000\\
+mother\_schooling2 & -0.2296147 & 0.2294087 & 1.0000000\\
+mother\_schooling3 & -0.0790496 & 0.7056870 & 1.0000000\\
+mother\_schooling4 & -0.1592331 & 0.3976212 & 1.0000000\\
+\addlinespace
+mother\_schooling5 & -0.0054524 & 0.9815636 & 1.0000000\\
+mother\_schooling6 & -0.0452888 & 0.8596504 & 1.0000000\\
+mother\_schooling7 & -0.3237400 & 0.1856243 & 1.0000000\\
+father\_schooling2 & -0.0593496 & 0.7393442 & 1.0000000\\
+father\_schooling3 & -0.1890603 & 0.3524776 & 1.0000000\\
+\addlinespace
+father\_schooling4 & -0.0505090 & 0.7786279 & 1.0000000\\
+father\_schooling5 & -0.1814210 & 0.4622589 & 1.0000000\\
+father\_schooling6 & -0.0420376 & 0.9306210 & 1.0000000\\
+father\_schooling7 & -0.1408316 & 0.4568370 & 1.0000000\\
+ever\_failed\_school2 & -0.5098885 & 0.0000103 & 0.0004324\\
+\addlinespace
+ever\_failed\_school3 & -0.0036747 & 0.9836599 & 1.0000000\\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(mod\_lp)}\SpecialCharTok{$}\NormalTok{coef[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{)] }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames =} \StringTok{"Coefficient"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{( }\StringTok{\textasciigrave{}}\AttributeTok{Pr Adj}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ adj\_pvalues[}\DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(}\FunctionTok{coef}\NormalTok{(mod\_lp))]) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \StringTok{"HOLD\_position"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{lrrr}
+\toprule
+Coefficient & Estimate & Pr(>\&\#124;t\&\#124;) & Pr Adj\\
+\midrule\relax
+(Intercept) & -0.0635403 & 0.7645948 & 1.0000000\\
+won\_lotteryA & 0.1576348 & 0.1311373 & 0.5068754\\
+sex2 & 0.1704197 & 0.0898444 & 1.0000000\\
+race2 & -0.2036467 & 0.0826321 & 1.0000000\\
+race3 & -0.1319742 & 0.3897353 & 1.0000000\\
+\addlinespace
+race4 & -0.2896389 & 0.3564862 & 0.6826161\\
+race5 & -0.3331029 & 0.3870123 & 1.0000000\\
+mother\_schooling2 & 0.0123479 & 0.9511576 & 1.0000000\\
+mother\_schooling3 & -0.0470267 & 0.8315169 & 1.0000000\\
+mother\_schooling4 & -0.1616132 & 0.4162259 & 1.0000000\\
+\addlinespace
+mother\_schooling5 & -0.0664447 & 0.7897361 & 1.0000000\\
+mother\_schooling6 & -0.0727105 & 0.7880761 & 1.0000000\\
+mother\_schooling7 & -0.5046497 & 0.0509931 & 1.0000000\\
+father\_schooling2 & 0.3368149 & 0.0742731 & 1.0000000\\
+father\_schooling3 & 0.1077227 & 0.6157820 & 1.0000000\\
+\addlinespace
+father\_schooling4 & 0.2360871 & 0.2137992 & 1.0000000\\
+father\_schooling5 & 0.1891544 & 0.4679616 & 1.0000000\\
+father\_schooling6 & 0.0231823 & 0.9637367 & 1.0000000\\
+father\_schooling7 & 0.2490246 & 0.2130699 & 1.0000000\\
+ever\_failed\_school2 & -0.0818479 & 0.4979544 & 0.0004324\\
+\addlinespace
+ever\_failed\_school3 & 0.0005726 & 0.9975887 & 1.0000000\\
+\bottomrule
+\end{longtable}
+
+\section{Question 5}\label{question-5}
+
+In this question, i'll focus on the computational answers.
+
+\subsection{Item a)}\label{item-a-2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_join }\OtherTok{\textless{}{-}} \FunctionTok{full\_join}\NormalTok{(data\_lot, data\_exam, }\AttributeTok{by =} \StringTok{"student\_code"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(lotteryA }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{did\_test =} \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(voluntary\_exam\_score),}
+    \AttributeTok{military =} \SpecialCharTok{!}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(won\_lotteryA) }\SpecialCharTok{|}\NormalTok{ won\_lotteryA }\SpecialCharTok{==} \DecValTok{0}\NormalTok{)}
+\NormalTok{  ) }
+
+\FunctionTok{summary}\NormalTok{(}\FunctionTok{lm}\NormalTok{(did\_test }\SpecialCharTok{\textasciitilde{}}\NormalTok{ military, data\_join))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = did_test ~ military, data = data_join)
+## 
+## Residuals:
+##        Min         1Q     Median         3Q        Max 
+## -3.450e-16 -3.450e-16 -3.450e-16  0.000e+00  1.098e-13 
+## 
+## Coefficients:
+##                Estimate Std. Error    t value Pr(>|t|)    
+## (Intercept)   1.000e+00  2.861e-16  3.495e+15   <2e-16 ***
+## militaryTRUE -3.452e-16  5.106e-16 -6.760e-01    0.499    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5.11e-15 on 463 degrees of freedom
+## Multiple R-squared:  0.5006, Adjusted R-squared:  0.4995 
+## F-statistic: 464.1 on 1 and 463 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\subsection{Item b)}\label{item-b-2}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data\_dummies }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(data\_join, did\_test)[}\DecValTok{2}\SpecialCharTok{:}\DecValTok{6}\NormalTok{] }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  fastDummies}\SpecialCharTok{::}\FunctionTok{dummy\_cols}\NormalTok{(}\AttributeTok{remove\_selected\_columns =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_names}\NormalTok{(labels) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{cbind}\NormalTok{(data\_lot[}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)]) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{na.omit}\NormalTok{()}
+
+\NormalTok{comparison\_treated }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(data\_dummies, }\StringTok{\textasciigrave{}}\AttributeTok{sex male}\StringTok{\textasciigrave{}}\SpecialCharTok{:}\StringTok{\textasciigrave{}}\AttributeTok{failed more}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{comparate}\NormalTok{(data\_dummies}\SpecialCharTok{$}\NormalTok{won\_lotteryA }\SpecialCharTok{==} \DecValTok{1}\NormalTok{)}
+
+\NormalTok{comparison\_treated }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{kable}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \StringTok{"HOLD\_position"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{lllrr}
+\toprule
+Variable & Control & Diff & P-value & Ajd. P-value\\
+\midrule\relax
+sex male & 0.432 (0.497) & -0.04 (0.049) & 0.423 & 0.423\\
+sex female & 0.568 (0.497) & 0.04 (0.049) & 0.423 & 0.423\\
+race white & 0.24 (0.428) & 0.027 (0.043) & 0.537 & 0.537\\
+race brown & 0.514 (0.502) & 0.022 (0.05) & 0.656 & 0.656\\
+race black & 0.192 (0.395) & -0.032 (0.039) & 0.409 & 0.409\\
+\addlinespace
+race yellow & 0.021 (0.142) & 0.008 (0.015) & 0.610 & 0.610\\
+race indigenous & 0.034 (0.182) & -0.025 (0.016) & 0.123 & 0.123\\
+mother l.t. 5 & 0.062 (0.241) & 0.042 (0.026) & 0.113 & 0.113\\
+mother 5 to 9 & 0.212 (0.41) & 0.023 (0.041) & 0.583 & 0.583\\
+mother 9 to HS & 0.151 (0.359) & -0.035 (0.035) & 0.318 & 0.318\\
+\addlinespace
+mother HS to college & 0.308 (0.463) & 0.005 (0.046) & 0.910 & 0.910\\
+mother college & 0.116 (0.322) & -0.032 (0.031) & 0.304 & 0.304\\
+mother more & 0.068 (0.253) & -0.009 (0.025) & 0.719 & 0.719\\
+mother unsure & 0.082 (0.276) & 0.006 (0.028) & 0.841 & 0.841\\
+father l.t. 5 & 0.11 (0.313) & 0.003 (0.031) & 0.917 & 0.917\\
+\addlinespace
+father 5 to 9 & 0.247 (0.433) & -0.027 (0.043) & 0.525 & 0.525\\
+father 9 to HS & 0.151 (0.359) & -0.054 (0.034) & 0.117 & 0.117\\
+father HS to college & 0.226 (0.42) & 0.05 (0.043) & 0.246 & 0.246\\
+father college & 0.048 (0.214) & 0.024 (0.023) & 0.293 & 0.293\\
+father more & 0.021 (0.142) & -0.014 (0.013) & 0.258 & 0.258\\
+\addlinespace
+father unsure & 0.199 (0.4) & 0.018 (0.04) & 0.662 & 0.662\\
+failed never & 0.678 (0.469) & 0.059 (0.046) & 0.204 & 0.204\\
+failed once & 0.212 (0.41) & -0.002 (0.041) & 0.955 & 0.955\\
+failed more & 0.11 (0.313) & -0.056 (0.029) & 0.052 & 0.052\\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comparison\_treated }\OtherTok{\textless{}{-}} \FunctionTok{select}\NormalTok{(data\_dummies, }\StringTok{\textasciigrave{}}\AttributeTok{sex male}\StringTok{\textasciigrave{}}\SpecialCharTok{:}\StringTok{\textasciigrave{}}\AttributeTok{failed more}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{comparate}\NormalTok{(data\_dummies}\SpecialCharTok{$}\NormalTok{won\_lotteryB }\SpecialCharTok{==} \DecValTok{1}\NormalTok{)}
+
+\NormalTok{comparison\_treated }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{kable}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{latex\_options =} \StringTok{"HOLD\_position"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[t]{lllrr}
+\toprule
+Variable & Control & Diff & P-value & Ajd. P-value\\
+\midrule\relax
+sex male & 0.348 (0.48) & 0.066 (0.063) & 0.294 & 0.294\\
+sex female & 0.652 (0.48) & -0.066 (0.063) & 0.294 & 0.294\\
+race white & 0.319 (0.469) & -0.071 (0.061) & 0.242 & 0.242\\
+race brown & 0.478 (0.503) & 0.06 (0.066) & 0.366 & 0.366\\
+race black & 0.188 (0.394) & -0.022 (0.051) & 0.671 & 0.671\\
+\addlinespace
+race yellow & 0.014 (0.12) & 0.013 (0.017) & 0.428 & 0.428\\
+race indigenous & 0 (0) & 0.02 (0.007) & 0.005 & 0.005\\
+mother l.t. 5 & 0.087 (0.284) & 0.004 (0.037) & 0.915 & 0.915\\
+mother 5 to 9 & 0.217 (0.415) & 0.012 (0.054) & 0.820 & 0.820\\
+mother 9 to HS & 0.159 (0.369) & -0.038 (0.047) & 0.422 & 0.422\\
+\addlinespace
+mother HS to college & 0.275 (0.45) & 0.043 (0.059) & 0.470 & 0.470\\
+mother college & 0.087 (0.284) & 0.009 (0.037) & 0.810 & 0.810\\
+mother more & 0.072 (0.261) & -0.012 (0.034) & 0.725 & 0.725\\
+mother unsure & 0.101 (0.304) & -0.018 (0.039) & 0.645 & 0.645\\
+father l.t. 5 & 0.116 (0.323) & -0.005 (0.042) & 0.909 & 0.909\\
+\addlinespace
+father 5 to 9 & 0.145 (0.355) & 0.097 (0.048) & 0.044 & 0.044\\
+father 9 to HS & 0.116 (0.323) & -0.002 (0.042) & 0.956 & 0.956\\
+father HS to college & 0.304 (0.464) & -0.052 (0.06) & 0.389 & 0.389\\
+father college & 0.072 (0.261) & -0.009 (0.034) & 0.783 & 0.783\\
+father more & 0.014 (0.12) & -0.004 (0.015) & 0.775 & 0.775\\
+\addlinespace
+father unsure & 0.232 (0.425) & -0.025 (0.055) & 0.653 & 0.653\\
+failed never & 0.783 (0.415) & -0.076 (0.055) & 0.173 & 0.173\\
+failed once & 0.174 (0.382) & 0.043 (0.05) & 0.393 & 0.393\\
+failed more & 0.043 (0.205) & 0.032 (0.028) & 0.253 & 0.253\\
+\bottomrule
+\end{longtable}
+
+\section{Item e)}\label{item-e-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{leedata }\OtherTok{\textless{}{-}}\NormalTok{ data\_join }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(military, did\_test, voluntary\_exam\_score) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{setNames}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"treat"}\NormalTok{, }\StringTok{"selection"}\NormalTok{, }\StringTok{"outcome"}\NormalTok{))}
+
+\NormalTok{leebounds}\SpecialCharTok{::}\FunctionTok{leebounds}\NormalTok{(leedata)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $lower_bound
+## [1] 0.2242981
+## 
+## $upper_bound
+## [1] 0.2242981
+## 
+## $p0
+## [1] 1
+## 
+## $trimmed_mean_upper
+## [1] 6.876583
+## 
+## $trimmed_mean_lower
+## [1] 6.876583
+## 
+## $mean_no_trim
+## [1] 6.652285
+## 
+## $odds
+## [1] 0.4576803
+## 
+## $yp0
+##     100% 
+## 9.779208 
+## 
+## $y1p0
+##       0% 
+## 1.336305 
+## 
+## $s0
+## [1] 1
+## 
+## $s1
+## [1] 1
+## 
+## $prop0
+## [1] 0.6860215
+## 
+## $prop1
+## [1] 0.3139785
+\end{verbatim}
+
+\end{document}

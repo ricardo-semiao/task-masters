@@ -1,0 +1,7 @@
+Instruções:
+
+Estimar os 10 modelos apresentados na Lecture 3 , testando se as hipóteses de validade dos modelos quando necessário. 
+
+Comparar os resultados por critérios de informação (AIC e BIC).
+
+Estimar um OLS e um OLS recursivo utilizando o melhor modelo do item 2, realizar previsões para a amostra de Teste e comparar os RMSE E MAE. 

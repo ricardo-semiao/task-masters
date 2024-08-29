@@ -1,0 +1,94 @@
+% !TEX root = ps6_text.tex
+
+\documentclass[12pt]{article}
+
+% Geometry
+\usepackage[a4paper, left=3cm, right=2.5cm, top=2.5cm, bottom=3cm]{geometry}
+
+% Font encoding
+\usepackage[utf8]{inputenc} % UTF-8 encoding
+\usepackage[T1]{fontenc} % Font encoding
+\usepackage{times}
+
+% Math packages
+\usepackage{amsmath} % Basic math symbols and environments
+\usepackage{amssymb} % Additional math symbols
+\usepackage{amsfonts} % Math fonts
+
+% Text packages
+\usepackage{parskip}
+\setlength{\parskip}{1em}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+}
+
+% Pictures
+\usepackage{graphicx}
+\usepackage{float}
+
+% Lists
+\usepackage{enumitem}
+\setlist[itemize]{itemsep = -0.5em, topsep = -0.5em}
+
+% Bibliography
+%\usepackage{cite}
+
+% Loops:
+\usepackage{pgffor}
+
+% Extra commands:
+\input{../style.tex}
+
+% Title and author
+\title{Econometrics II - Problem Set 6}
+\author{Ricardo Semião e Castro}
+\date{06/2024}
+
+
+\begin{document}
+
+\maketitle
+
+\section*{Question 1}
+
+The average biases for each model are as follows:
+
+\begin{table}[H]
+    \centering
+    \caption{Average bias for each model}
+    \label{tb:bias}
+    \begin{tabular}{rrrr}
+        \hline
+        OLS       & WG      & Diff      & AH        \\ \hline
+        0.0015171 & -0.0002359 & -0.0002359 & 0.0000003 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+We can see that the sanity checks pass: OLS has a upward bias, WG and Diff have the same downward bias, and AH has very little bias.
+
+The proportion of WG estimators greater than the OLS ones was decently low, approximately $9\%$.
+
+
+
+\section*{Question 2}
+
+The deciles of the 1st stage F-stat are as follows, which can be easily compared with the benchmarks $F = 10$ and $F = 104.7$.
+
+\begin{table}[H]
+    \centering
+    \caption{Deciles of the 1st stage F-stat}
+    \label{tb:deciles}
+    \begin{tabular}{ccccccccc}
+        \hline
+        10\% & 20\% & 30\% & 40\% & 50\% & 60\% & 70\% & 80\% & 90\% \\ \hline
+        0.024 & 0.102 & 0.264 & 0.455 & 0.799 & 1.315 & 2.032 & 3.110 & 6.674 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+And the average bias was approximately $0.027$, which is indeed larger.
+
+\end{document}
