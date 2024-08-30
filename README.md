@@ -40,6 +40,14 @@ A class on numeric methods to solve macroeconomic models. The tasks were about:
 - Macro specific problems, such as solving a RBC model.
 
 
+## [Econometrics I](econometrics1)
+
+A introductory class on econometrics. The task is described at [instructions.pdf](econometrics1/instructions.pdf), but basically entails the replication of works in the literature of “quantity-quality trade-off”, a la Becker and Lewis (1973) and Becker and Tomes (1976). The finished report is [text.pdf](econometrics1/text.pdf).
+
+The data comes from IPUMS International, the Puerto Rico 2010's census, and is at [data/](econometrics1/data/). The main script is [main.R](econometrics1/main.R), and the report is built with [text.tex](econometrics1/text.tex).
+
+
+
 ## [Microeconometrics I](microeconometrics1)
 
 A class focused on experiments and causal inference. Again, very varied, mixing theoretical and empirical problems. The tasks were about:
