@@ -1,0 +1,130 @@
+============== DRAFTS: ==================
+
+BIC.glmnet <- function(x, n, ...) {
+  log(n) * x$df + n * log(x$dev.ratio * x$nulldev / n)
+}
+
+load("rr/rawdata.rda")
+
+
+
+
+data_x <- select(data, -c(sasdate, CPIAUCSL))
+.names_x <- c(
+  paste0(rep(names(data_x), each = n_lags), "_", 0:n_lags),
+  paste0("CPIAUCSL_", 1:n_lags)
+)
+
+data_x <- data_x %>%
+  as.matrix() %>%
+  embed(5) %>% #5 lags for every variable
+  cbind(embed(data$CPIAUCSL, n_lags)[, -n_lags], .) %>%
+  `colnames<-`(.names_x)
+
+data_y <- slice(data, -(1:(n_lags - 1)))$CPIAUCSL
+
+
+#data_sub1 <- filter(data,
+#  sasdate %>% {. >= as.Date("1990-01-01") & . <= as.Date("2000-12-31")}
+#)
+#
+#data_sub2 <- filter(data,
+#  sasdate %>% {. >= as.Date("2001-01-01") & . <= as.Date("2015-12-31")}
+#)
+
+
+
+
+
+predict(mods$bench_rw, 6)$pred
+predict(mods$bench_ar, 6)$pred
+
+predict(mods$shrink_ridge, data_base[763:768, ])[,1]
+predict(mods$shrink_lasso, data_full[763:768, ])[,1]
+predict(mods$shrink_elnet, data_full[763:768, ])[,1]
+predict(mods$shrink_adalasso, data_full[763:768, ])[,1]
+predict(mods$shrink_adaelnet, data_full[763:768, ])[,1]
+
+predict(mods$factor_target, data_pca_target[763:768, ])
+predict(mods$factor_boosting, as.matrix(data_pca[763:768, ]))[,1]
+
+predict(mods$ensemble_bagging, as.matrix(data_pca[763:768, ]))
+predict(mods$ensemble_csr, as.matrix(data_pca[763:768, ]))
+predict(mods$ensemble_forest, as.matrix(data_pca[763:768, ]))
+
+as.matrix(a[763:768, ]) %*% coef(mods$var_exogen$varresult$data_y)
+as.matrix(a[763:768, ]) %*% coef(mods$var_pca$varresult$data_y)
+
+
+endog <- cbind(data$y, data_base[.lasso_relevant])
+names <- c(
+  pmap_chr(expand_grid(make.names(colnames(endog)), ".l", 1:2), paste0),
+  "const",
+  make.names(colnames(data_base[,-(1:6)]))
+)
+
+a = cbind(lag(endog), lag(endog, 2)) %>%
+  cbind(., 1, data_base[,-(1:6)]) %>%
+  `colnames<-`(names)
+
+
+
+endog <- cbind(data_y, select(data_pca, ends_with("0")))
+names <- c(
+  pmap_chr(expand_grid(make.names(colnames(endog)), ".l", 1:5), paste0),
+  "const"
+)
+
+a = cbind(lag(endog), lag(endog, 2), lag(endog, 3), lag(endog, 4), lag(endog, 5)) %>%
+  cbind(., 1) %>%
+  `colnames<-`(names)
+
+
+
+
+
+as.matrix(a[763:768, ]) %*% coef(mods$var_exogen$varresult$data_y)
+as.matrix(a[763:768, ]) %*% coef(mods$var_pca$varresult$data_y)
+
+
+
+n <- nrow(data)
+
+g_base <- data_base
+g_base$index = 1:nrow(data_base)
+
+g_pred <- tibble(
+  pred = as.matrix(a[763:768, ]) %*% coef(mods$var_exogen$varresult$data_y) %>%
+    c(data$CPIAUCSL[nrow(data_base)], .),
+  index = nrow(data_base) + 0:6
+)
+
+ggplot(g_base, aes(index)) +
+  geom_line(aes(y = .data[[y_name]])) +
+  geom_line(aes(y = pred), g_pred, color = "blue", linetype = "dashed") +
+  xlim(750, 790)
+
+
+
+
+for (h in horizons) {
+  .datah <- imap(data, function(x, name) {
+    if (name == "y") x[(k + 1):length(x)] else x[1:(nrow(x) - k), ]
+  })
+  
+  for (w in 1:(length(.datah$y) - n_train - max(horizons) - 1)) {
+    .dataw <- imap(.datah, function(x, name) {
+      if (name == "y") x[w:(n_train + w)] else x[w:(w + n_train), ]
+     #if (name == "y") x[1:(w + n_train)] else x[1:(w + n_train), ]
+    })
+    
+    mods <- c(
+      model$bench(.dataw),
+      model$shrink(.dataw),
+      model$factor(.dataw),
+      model$ensemble(.dataw),
+      model$var(.dataw)
+    )
+  }
+  
+}
